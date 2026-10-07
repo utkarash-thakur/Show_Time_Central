@@ -1,58 +1,68 @@
-### ShowTime Central - Event Ticket Booking System
+# ShowTime Central · Event Ticketing
 
-Welcome to ShowTime Central, an event ticket booking system designed to provide a seamless platform for discovering and booking a wide range of entertainment and cultural events. This project draws inspiration from popular applications like BookMyShow to deliver a user-friendly portal that caters to the needs of event organizers and customers alike.
+A console app in core Java for discovering and booking events, inspired by BookMyShow. Customers browse, book and manage tickets; organizers publish and manage their events; an administrator approves organizers and oversees everything.
 
-#### Stakeholders
+**Portfolio:** [utkarash-thakur.vercel.app](https://utkarash-thakur.vercel.app)
 
-The ShowTime Central platform involves the following stakeholders:
+## Highlights
 
-1. Administrator
-2. Event Organizer
-3. Customer
+- Three separate flows (administrator, event organizer, customer), each with its own menu.
+- Layered design: service interfaces (`EventServices`, `BookingServices`, `CustomerService`) with separate implementations.
+- Custom exceptions for login, bookings, duplicates and invalid input, so bad input never crashes the app.
+- Data saved to disk with Java object serialization (`Event.ser`, `Bookings.ser`, `Customer.ser`, `Organizer.ser`), so it survives restarts without a database.
+- Customer wallet: add funds and pay for tickets; if an organizer deletes an event, customers who booked it are refunded.
 
-Let's explore the roles and responsibilities of each stakeholder in detail:
+## Features
 
-#### Administrator
+**Administrator**
+- Log in with the default account (`admin` / `admin`).
+- Approve or reject organizer registrations.
+- View and manage organizers and their events.
+- See all customers and their bookings.
 
-The Administrator plays a crucial role in managing the ShowTime Central system. Their responsibilities include:
+**Event organizer**
+- Register, then log in once approved.
+- Add events with type, venue, date and time, ticket count and price.
+- Update or delete events by event ID.
+- View bookings for their events.
 
-- Login using the provided unique ID and password (default: admin/admin).
-- Approve or reject event organizer requests for registration.
-- View and manage event organizers, including adding, updating, or deleting their events.
-- Access a comprehensive view of all customers and their bookings.
-- Maintain the smooth operation of the platform and ensure security.
+**Customer**
+- Sign up with a unique email and log in.
+- Browse events and book by event ID.
+- Add money to a wallet and pay from it.
+- View profile and booking history; delete the account.
 
-#### Event Organizer
+## Tech stack
 
-Event Organizers are individuals or entities who organize various events and wish to promote and sell tickets through ShowTime Central. Here's what Event Organizers can do:
+Java · OOP · Collections · Java Serialization (no database)
 
-- Register as an organizer by providing necessary details and waiting for Administrator approval.
-- Login to the system once approved.
-- Add new events, including event details, ticket availability, pricing, venue information and date&time of the event.
-- Update or delete existing events using the unique event ID.
--If event is delete the moeny will we refunded to the customers how had book the event.
-- View bookings made for their events and manage ticket sales.
+## Project structure
 
-#### Customer
+```
+Event Ticketing/src/com/masai
+├── Main.java            menus for the three roles
+├── admin/               Administrator
+├── organizer/           EventOrganizer, OrganizerImpl
+├── event/               Event, EventType, EventServices(+Impl)
+├── booking/             Booking, BookingServices, BookingServiceImpl
+├── customer/            Customer, CustomerService(+Impl)
+├── exceptions/          Authentication, Booking, DuplicateData, Event, InvalidChoice, InvalidDetails
+├── FileExists.java      loads and creates the .ser data files
+└── IDGeneration.java    unique IDs
+```
 
-Customers are the core users of ShowTime Central, benefiting from a wide selection of events and streamlined ticket booking. Here are the features available to customers:
+## Run it locally
 
-- Signup and create an account using a unique email address.
-- Login using their username and password.
-- Browse and explore the extensive list of events available for booking.
-- Book desired events and select using the event ID.
-- Add funds to their wallet for convenient and quick payment.
-- View their customer profile details, including booking history and account information.
-- Delete their account if needed, with appropriate confirmation.
+1. Install a JDK (Java 8 or newer).
+2. Open the `Event Ticketing` folder as a Java project in Eclipse or IntelliJ, and run `com.masai.Main`.
+   Or compile and run from a terminal:
+   ```bash
+   cd "Event Ticketing"
+   javac -d bin $(find src -name "*.java")
+   java -cp bin com.masai.Main
+   ```
+3. Data files (`*.ser`) are created in the working folder on first run.
 
-### Getting Started
+## Author
 
-To access ShowTime Central as an Administrator, use the provided unique ID and password (admin/admin). As an Event Organizer or Customer, you can sign up using the registration form and subsequently log in using your chosen credentials.
-
-When performing any updates or deletions related to events, Event Organizers and Customers need to provide the specific event ID associated with the event they want to modify or remove. This ensures accurate identification and targeted actions.
-
-The system provides an intuitive user interface with easy navigation, allowing stakeholders to efficiently perform their respective tasks and enjoy a seamless experience.
-
-Thank you for choosing ShowTime Central for your event ticket booking needs. We look forward to providing you with an exceptional service. If you encounter any issues or have any questions, please feel free to reach out to me.
-
-Happy booking!
+**Utkarash Thakur**, Backend Engineer · [Portfolio](https://utkarash-thakur.vercel.app) · [LinkedIn](https://www.linkedin.com/in/utkarash-thakur/)
